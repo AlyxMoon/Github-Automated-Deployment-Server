@@ -5,7 +5,12 @@
   "main": "src/app.js",
   "author": "Allister <allisterkmoon@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "start": "node src/app.js",
+    "start:dev": "node src/app.js -d"
+  },
   "dependencies": {
+    "command-line-args": "^5.0.2",
     "express": "^4.16.4"
   }
 }
