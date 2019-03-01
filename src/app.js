@@ -12,7 +12,7 @@ app.get('/payload', (req, res) => {
     console.debug('DEBUG: Recieved a request on GET /payload')
   }
 
-  res.json({})
+  res.sendFile(path.join(__dirname, 'pages/payload.html'))
 })
 
 app.post('/payload', (req, res) => {
@@ -28,7 +28,7 @@ app.all('*', (req, res) => {
     console.debug(`DEBUG: Recieved a request on ${req.method} ${req.path}`)
   }
 
-  res.json({})
+  res.sendFile(path.join(__dirname, 'pages/index.html'))
 })
 
 app.listen(config.server.PORT, () => {
