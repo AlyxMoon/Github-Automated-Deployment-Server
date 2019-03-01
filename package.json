@@ -1,0 +1,11 @@
+{
+  "name": "simple-github-deployment-server",
+  "version": "1.0.0",
+  "description": "A small personal server intended to deploy apps on my webserver based on Github webhooks",
+  "main": "src/app.js",
+  "author": "Allister <allisterkmoon@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
