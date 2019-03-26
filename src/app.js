@@ -1,11 +1,13 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const path = require('path')
 
 const app = express()
-
 const config = require('../config')
+const { createOrUpdateRepository } = require('./lib')
 
 app.use(express.static(path.join(__dirname, 'assets')))
+app.use(bodyParser.json())
 
 app.get('/payload', (req, res) => {
   if (config.server.DEBUG) {
@@ -20,7 +22,13 @@ app.post('/payload', (req, res) => {
     console.debug('DEBUG: Recieved a request on POST /payload')
   }
 
-  res.json({})
+  if (req.body && req.body.repository) {
+    res.json({ success: true })
+
+    createOrUpdateRepository(req.body.repository)
+  } else {
+    res.status(500).json({ success: false, error: 'The correct json data was missing?', data: req.body })
+  }
 })
 
 app.all('*', (req, res) => {
