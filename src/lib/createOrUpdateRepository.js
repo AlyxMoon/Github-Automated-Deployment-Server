@@ -1,5 +1,5 @@
 const fs = require('fs').promises
-const exec = require('child_process')
+const { exec } = require('child_process')
 const { WEB_DIRECTORY } = require('../../config').server
 
 // Input: The 'repository' field of the Github webhooks
@@ -16,7 +16,7 @@ const createOrUpdateRepository = (repositoryInfo) => {
 
 const createRepository = repositoryInfo => {
   return new Promise((resolve, reject) => {
-    exec(`git clone ${repositoryInfo.clone_url}`, { cwd: WEB_DIRECTORY }, (error) => {
+    exec(`git clone ${repositoryInfo.clone_url} blah`, { cwd: WEB_DIRECTORY }, (error) => {
       if (error) return reject(error)
       return resolve()
     })
