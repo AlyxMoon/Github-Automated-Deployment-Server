@@ -18,6 +18,8 @@ const createRepository = repositoryInfo => {
   return new Promise((resolve, reject) => {
     exec(`git clone ${repositoryInfo.clone_url}`, { cwd: WEB_DIRECTORY }, (error) => {
       if (error) return reject(error)
+
+      console.log(`Created repository "${repositoryInfo.name}" at ${WEB_DIRECTORY}/${repositoryInfo.name}`)
       return resolve()
     })
   })
@@ -27,6 +29,8 @@ const updateRepository = repositoryInfo => {
   return new Promise((resolve, reject) => {
     exec(`git pull`, { cwd: `${WEB_DIRECTORY}/${repositoryInfo.name}` }, (error) => {
       if (error) return reject(error)
+
+      console.log(`Updated repository "${repositoryInfo.name}" at ${WEB_DIRECTORY}/${repositoryInfo.name}`)
       return resolve()
     })
   })
@@ -36,6 +40,8 @@ const runRepositoryExecFile = repositoryInfo => {
   return new Promise((resolve, reject) => {
     exec(`sh .alyxci.sh`, { cwd: `${WEB_DIRECTORY}/${repositoryInfo.name}` }, (error) => {
       if (error) return reject(error)
+
+      console.log(`.alyxci.sh file was run for repository ${repositoryInfo.name}`)
       return resolve()
     })
   })
