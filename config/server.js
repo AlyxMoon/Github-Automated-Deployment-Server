@@ -8,5 +8,5 @@ const path = require('path')
 module.exports = {
   DEBUG: options.debug || false,
   PORT: options.port || 11050,
-  WEB_DIRECTORY:  options.web_directory || path.resolve('..')
+  WEB_DIRECTORY:  options.web_directory || path.resolve('../..')
 }
