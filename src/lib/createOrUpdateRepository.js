@@ -9,10 +9,7 @@ const { WEB_DIRECTORY } = require('../../config').server
 // Then, will run a provided file in the repository (.alyxci) to take care of things such as restarting the app
 const createOrUpdateRepository = (repositoryInfo) => {
   fs.readdir(WEB_DIRECTORY)
-    .then(files => {
-      console.log(WEB_DIRECTORY, repositoryInfo.name, files)
-      return repositoryInfo.name in files ? updateRepository(repositoryInfo) : createRepository(repositoryInfo)
-    })
+    .then(files => files.includes[repositoryInfo.name] ? updateRepository(repositoryInfo) : createRepository(repositoryInfo))
     .then(() => runRepositoryExecFile(repositoryInfo) )
     .catch(error => console.error(`ERROR: ${error.message}`) )
 }
