@@ -15,7 +15,6 @@ const createOrUpdateRepository = (repositoryInfo) => {
 }
 
 const createRepository = repositoryInfo => {
-  console.log(WEB_DIRECTORY)
   return new Promise((resolve, reject) => {
     exec(`git clone ${repositoryInfo.clone_url}`, { cwd: WEB_DIRECTORY }, (error) => {
       if (error) return reject(error)
@@ -25,7 +24,6 @@ const createRepository = repositoryInfo => {
 }
 
 const updateRepository = repositoryInfo => {
-  console.log(`${WEB_DIRECTORY}/${repositoryInfo.name}`)
   return new Promise((resolve, reject) => {
     exec(`git pull`, { cwd: `${WEB_DIRECTORY}/${repositoryInfo.name}` }, (error) => {
       if (error) return reject(error)
