@@ -1,10 +1,18 @@
+require('dotenv').config()
+if (!process.env.SECRET_TOKEN) {
+  console.error('ERROR: The secret token was not set in the .env file, will not be able to process any webhook submissions.')
+}
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const path = require('path')
 
 const app = express()
 const config = require('../config')
-const { createOrUpdateRepository } = require('./lib')
+const {
+  createOrUpdateRepository,
+  verifyPayload
+} = require('./lib')
 
 app.use(express.static(path.join(__dirname, 'assets')))
 app.use(bodyParser.json())
@@ -23,9 +31,12 @@ app.post('/payload', (req, res) => {
   }
 
   if (req.body && req.body.repository) {
-    res.json({ success: true })
-
-    createOrUpdateRepository(req.body.repository)
+    if (verifyPayload(JSON.stringify(req.body), req.get('X-Hub-Signature'))) {
+      res.json({ success: true })
+      createOrUpdateRepository(req.body.repository)
+    } else {
+      res.status(500).json({ success: false, error: 'Hash signatures did not match!' })
+    }
   } else {
     res.status(500).json({ success: false, error: 'The correct json data was missing?', data: req.body })
   }
