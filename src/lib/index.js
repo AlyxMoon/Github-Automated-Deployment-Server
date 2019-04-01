@@ -1,2 +1,2 @@
 module.exports.createOrUpdateRepository = require('./createOrUpdateRepository')
-module.export.verifyPayload = require('./verifyPayload')
+module.exports.verifyPayload = require('./verifyPayload')
