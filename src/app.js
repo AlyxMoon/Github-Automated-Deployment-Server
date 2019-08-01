@@ -32,8 +32,15 @@ app.post('/payload', (req, res) => {
 
   if (req.body && req.body.repository) {
     if (verifyPayload(JSON.stringify(req.body), req.get('X-Hub-Signature'))) {
-      res.json({ success: true })
-      createOrUpdateRepository(req.body.repository)
+
+
+      if (req.body.ref === 'refs/heads/master') {
+        res.json({ success: true, message: 'Recieved payload for update on master branch. Updating code on the server' })
+
+        createOrUpdateRepository(req.body.repository)
+      } else {
+        res.json({ success: true, message: 'Recieved payload, but no changes were made as commit was not made on master' })
+      }
     } else {
       res.status(500).json({ success: false, error: 'Hash signatures did not match!' })
     }
